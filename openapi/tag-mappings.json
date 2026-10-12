@@ -115,7 +115,9 @@
     "it_management_asset_attributes": "it-management-asset-attributes",
     "it_management_asset_locations": "it-management-asset-locations",
     "it_management_asset_members": "it-management-asset-members",
-    "it_management_custom_application_masters": "it-management-custom-application-masters"
+    "it_management_custom_application_masters": "it-management-custom-application-masters",
+    "it_management_employment_types": "it-management-employment-types",
+    "it_management_guests": "it-management-guests"
   },
   "fixed-asset-management-api": {
     "fixed_asset_management_fixed_assets": "fixed-assets"

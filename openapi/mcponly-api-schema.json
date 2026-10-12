@@ -1893,7 +1893,8 @@
         "enum": [
           "SURVEY_STATUS_UNSPECIFIED",
           "SURVEY_STATUS_IN_PROGRESS",
-          "SURVEY_STATUS_COMPLETED"
+          "SURVEY_STATUS_COMPLETED",
+          "SURVEY_STATUS_NOT_STARTED"
         ],
         "description": "実施回のステータス"
       },
@@ -1903,6 +1904,7 @@
           "id",
           "title",
           "start_date",
+          "end_date",
           "status",
           "is_hidden"
         ],
@@ -1922,6 +1924,12 @@
             "format": "date-time",
             "description": "開始日(ISO8601)",
             "example": "2026-08-01T00:00:00Z"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "終了日(ISO8601)",
+            "example": "2026-08-08T00:00:00Z"
           },
           "status": {
             "$ref": "#/components/schemas/Survey.SurveyStatus"
@@ -2023,6 +2031,12 @@
             "type": "string",
             "description": "閲覧範囲",
             "example": "all"
+          },
+          "reminder_already_sent": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "リマインドを送信済みか",
+            "example": false
           }
         },
         "description": "実施回の詳細",
@@ -2267,7 +2281,8 @@
           "is_required",
           "display_order",
           "question_category",
-          "question_sub_category"
+          "question_sub_category",
+          "is_default"
         ],
         "properties": {
           "id": {
@@ -2303,6 +2318,11 @@
             "type": "string",
             "description": "質問サブカテゴリ",
             "example": ""
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "テンプレート設問か",
+            "example": true
           },
           "additional_question_id": {
             "type": "string",

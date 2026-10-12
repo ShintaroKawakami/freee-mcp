@@ -129,6 +129,8 @@
 - it-management-it-management-asset-locations.md — asset_locations
 - it-management-it-management-asset-members.md — asset_members
 - it-management-it-management-custom-application-masters.md — custom_application_masters
+- it-management-it-management-employment-types.md — employment_types
+- it-management-it-management-guests.md — guests
 - it-management-members.md — members
 
 ## fixed_asset_management - freee固定資産
