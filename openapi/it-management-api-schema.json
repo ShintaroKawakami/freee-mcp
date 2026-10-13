@@ -66,6 +66,16 @@
       "x-displayName": "部署"
     },
     {
+      "name": "it_management_employment_types",
+      "description": "employment_types",
+      "x-displayName": "雇用形態"
+    },
+    {
+      "name": "it_management_guests",
+      "description": "guests",
+      "x-displayName": "ゲスト"
+    },
+    {
       "name": "it_management_members",
       "description": "members",
       "x-displayName": "メンバー"
@@ -2653,6 +2663,499 @@
         ]
       }
     },
+    "/hub/it_management/employment_types": {
+      "get": {
+        "operationId": "list_it_management_employment_types",
+        "summary": "雇用形態一覧取得（β版）",
+        "description": "雇用形態の一覧をカーソルページネーションで取得します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.ListRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.ListRequest.page_token"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.ListRequest.page_size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "雇用形態一覧取得レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ItManagement.EmploymentTypes.EmploymentType"
+                      },
+                      "description": "雇用形態のリスト"
+                    },
+                    "next_page_token": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "次のページを取得するためのカーソルトークン。次ページがない場合はnull",
+                      "example": "eyJvcmRlciI6W10sImlkIjoiYWJjIn0"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "next_page_token"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_employment_types"
+        ]
+      },
+      "post": {
+        "operationId": "create_it_management_employment_type",
+        "summary": "雇用形態作成（β版）",
+        "description": "雇用形態を作成します。\n\n## 注意点\n\n- 雇用形態名と外部コードは、ほかの雇用形態と重複できません。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "雇用形態作成レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.EmploymentTypes.EmploymentType"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_employment_types"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "事業所ID",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "雇用形態名",
+                    "example": "正社員"
+                  },
+                  "code": {
+                    "type": "string",
+                    "nullable": true,
+                    "maxLength": 30,
+                    "description": "外部コード",
+                    "example": "FT-001"
+                  }
+                },
+                "required": [
+                  "company_id",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "description": "The body type of the operation request or response."
+        }
+      }
+    },
+    "/hub/it_management/employment_types/{id}": {
+      "get": {
+        "operationId": "get_it_management_employment_type",
+        "summary": "雇用形態詳細取得（β版）",
+        "description": "雇用形態の詳細を取得します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.GetRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.GetRequest.id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "雇用形態詳細取得レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.EmploymentTypes.EmploymentType"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_employment_types"
+        ]
+      },
+      "patch": {
+        "operationId": "partial_update_it_management_employment_type",
+        "summary": "雇用形態部分更新（β版）",
+        "description": "雇用形態を部分的に更新します。\n\n## 注意点\n\n- 指定されたパラメーターのみが更新されます。\n- 雇用形態名と外部コードは、ほかの雇用形態と重複できません。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.PartialUpdateRequest.id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "雇用形態部分更新レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.EmploymentTypes.EmploymentType"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_employment_types"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "事業所ID",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "雇用形態名",
+                    "example": "正社員"
+                  },
+                  "code": {
+                    "type": "string",
+                    "nullable": true,
+                    "maxLength": 30,
+                    "description": "外部コード",
+                    "example": "FT-001"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "description": "The body type of the operation request or response."
+        }
+      },
+      "delete": {
+        "operationId": "delete_it_management_employment_type",
+        "summary": "雇用形態削除（β版）",
+        "description": "雇用形態を削除します。\n\n## 注意点\n\n- プリセットの雇用形態 (preset_kind が null でないもの) は削除できません。\n- グループのルールやメンバーフィルターの条件で使われている雇用形態は削除できません。\n- 削除した雇用形態が設定されていたメンバーは、雇用形態が未設定になります。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.DeleteRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.EmploymentTypes.DeleteRequest.id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "雇用形態削除レスポンス"
+          }
+        },
+        "tags": [
+          "it_management_employment_types"
+        ]
+      }
+    },
+    "/hub/it_management/guests": {
+      "get": {
+        "operationId": "list_it_management_guests",
+        "summary": "ゲスト一覧取得（β版）",
+        "description": "ゲスト (freee 従業員ではない外部ユーザー) の一覧をカーソルページネーションで取得します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.ListRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.ListRequest.keyword"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.ListRequest.page_token"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.ListRequest.page_size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ゲスト一覧取得レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ItManagement.Guests.Guest"
+                      },
+                      "description": "ゲストのリスト"
+                    },
+                    "next_page_token": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "次のページを取得するためのカーソルトークン。次ページがない場合はnull",
+                      "example": "eyJvcmRlciI6W10sImlkIjoiYWJjIn0"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "next_page_token"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_guests"
+        ]
+      },
+      "post": {
+        "operationId": "create_it_management_guest",
+        "summary": "ゲスト作成（β版）",
+        "description": "ゲストを作成します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "ゲスト作成レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.Guests.Guest"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_guests"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "事業所ID",
+                    "example": 1
+                  },
+                  "family_name": {
+                    "type": "string",
+                    "description": "姓",
+                    "example": "山田"
+                  },
+                  "given_name": {
+                    "type": "string",
+                    "description": "名",
+                    "example": "太郎"
+                  },
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "メールアドレス (1 個以上)",
+                    "example": [
+                      "yamada@example.com"
+                    ]
+                  }
+                },
+                "required": [
+                  "company_id",
+                  "family_name",
+                  "given_name",
+                  "emails"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "description": "The body type of the operation request or response."
+        }
+      }
+    },
+    "/hub/it_management/guests/{id}": {
+      "get": {
+        "operationId": "get_it_management_guest",
+        "summary": "ゲスト詳細取得（β版）",
+        "description": "ゲストの詳細を取得します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.GetRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.GetRequest.id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ゲスト詳細取得レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.Guests.Guest"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_guests"
+        ]
+      },
+      "patch": {
+        "operationId": "partial_update_it_management_guest",
+        "summary": "ゲスト部分更新（β版）",
+        "description": "ゲストを部分的に更新します。\n\n## 注意点\n\n- 指定されたパラメーターのみが更新されます。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.PartialUpdateRequest.id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ゲスト部分更新レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItManagement.Guests.Guest"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "it_management_guests"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "事業所ID",
+                    "example": 1
+                  },
+                  "family_name": {
+                    "type": "string",
+                    "description": "姓",
+                    "example": "山田"
+                  },
+                  "given_name": {
+                    "type": "string",
+                    "description": "名",
+                    "example": "太郎"
+                  },
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "メールアドレス (1 個以上)",
+                    "example": [
+                      "yamada@example.com"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "description": "The body type of the operation request or response."
+        }
+      },
+      "delete": {
+        "operationId": "delete_it_management_guest",
+        "summary": "ゲスト削除（β版）",
+        "description": "ゲストを削除します。",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FreeeUsingBetaHeader"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.DeleteRequest.company_id"
+          },
+          {
+            "$ref": "#/components/parameters/ItManagement.Guests.DeleteRequest.id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "ゲスト削除レスポンス"
+          }
+        },
+        "tags": [
+          "it_management_guests"
+        ]
+      }
+    },
     "/hub/it_management/members": {
       "get": {
         "operationId": "list_it_management_members",
@@ -4167,6 +4670,188 @@
           "format": "uuid"
         }
       },
+      "ItManagement.EmploymentTypes.ListRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.EmploymentTypes.ListRequest.page_token": {
+        "name": "page_token",
+        "in": "query",
+        "required": false,
+        "description": "ページネーションのトークン",
+        "schema": {
+          "type": "string"
+        },
+        "explode": false
+      },
+      "ItManagement.EmploymentTypes.ListRequest.page_size": {
+        "name": "page_size",
+        "in": "query",
+        "required": false,
+        "description": "1ページあたりの取得件数（デフォルト25、最大100）",
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "explode": false
+      },
+      "ItManagement.EmploymentTypes.GetRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.EmploymentTypes.GetRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "雇用形態ID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "ItManagement.EmploymentTypes.PartialUpdateRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "雇用形態ID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "ItManagement.EmploymentTypes.DeleteRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.EmploymentTypes.DeleteRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "雇用形態ID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "ItManagement.Guests.ListRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.ListRequest.keyword": {
+        "name": "keyword",
+        "in": "query",
+        "required": false,
+        "description": "名前 / メールアドレスの部分一致検索キーワード",
+        "schema": {
+          "type": "string"
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.ListRequest.page_token": {
+        "name": "page_token",
+        "in": "query",
+        "required": false,
+        "description": "ページネーションのトークン",
+        "schema": {
+          "type": "string"
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.ListRequest.page_size": {
+        "name": "page_size",
+        "in": "query",
+        "required": false,
+        "description": "1ページあたりの取得件数（デフォルト25、最大100）",
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.GetRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.GetRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ゲストID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "ItManagement.Guests.PartialUpdateRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ゲストID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "ItManagement.Guests.DeleteRequest.company_id": {
+        "name": "company_id",
+        "in": "query",
+        "required": true,
+        "description": "事業所ID",
+        "schema": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "explode": false
+      },
+      "ItManagement.Guests.DeleteRequest.id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ゲストID",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
       "ItManagement.Members.ListRequest.company_id": {
         "name": "company_id",
         "in": "query",
@@ -5668,6 +6353,112 @@
           }
         },
         "description": "部署",
+        "additionalProperties": false
+      },
+      "ItManagement.EmploymentTypes.EmploymentType": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "code",
+          "preset_kind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "雇用形態ID",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "name": {
+            "type": "string",
+            "description": "雇用形態名",
+            "example": "正社員"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true,
+            "description": "外部コード",
+            "example": "FT-001"
+          },
+          "preset_kind": {
+            "type": "string",
+            "enum": [
+              "board_member",
+              "full_timer",
+              "contract_worker",
+              "permatemp",
+              "part_timer",
+              "outsourcing_contractor"
+            ],
+            "nullable": true,
+            "description": "プリセット雇用形態の識別子。ユーザー作成の雇用形態は null\n\n- board_member: 役員\n- full_timer: 正社員\n- contract_worker: 契約社員\n- permatemp: 派遣社員\n- part_timer: アルバイト・パート\n- outsourcing_contractor: 業務委託",
+            "example": "full_timer"
+          }
+        },
+        "description": "雇用形態",
+        "additionalProperties": false
+      },
+      "ItManagement.Guests.Guest": {
+        "type": "object",
+        "required": [
+          "id",
+          "display_name",
+          "family_name",
+          "given_name",
+          "emails",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ゲストID",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "display_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "表示名",
+            "example": "山田 太郎"
+          },
+          "family_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "姓",
+            "example": "山田"
+          },
+          "given_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "名",
+            "example": "太郎"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "メールアドレス (複数可)",
+            "example": [
+              "yamada@example.com"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "作成日時(ISO8601)",
+            "example": "2026-01-01T00:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "更新日時(ISO8601)",
+            "example": "2026-01-01T00:00:00Z"
+          }
+        },
+        "description": "ゲスト (freee 従業員ではない外部ユーザー)",
         "additionalProperties": false
       },
       "ItManagement.Members.MemberStatus": {
